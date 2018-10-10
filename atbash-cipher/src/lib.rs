@@ -13,13 +13,10 @@ pub fn encode(plain: &str) -> String {
             _ => None,
         }).enumerate()
         .flat_map(|(i, x)| {
-            if i % 5 == 0 && i != 0 {
-                iter::once(' ').chain(iter::once(x))
-            } else {
-                iter::once('*').chain(iter::once(x))
-            }
-        }).filter(|&s| s != '*')
-        .collect::<String>()
+            iter::once(' ')
+                .filter(move |_y| i % 5 == 0 && i != 0)
+                .chain(iter::once(x))
+        }).collect::<String>()
 }
 
 /// "Decipher" with the Atbash cipher.
