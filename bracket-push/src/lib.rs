@@ -1,8 +1,8 @@
 pub fn brackets_are_balanced(string: &str) -> bool {
     let mut stack = Vec::new();
-    for c in string.chars().filter(|s| is_bracket(s)) {
-        if is_closing(&c) {
-            if is_paired(&stack[..], &c) {
+    for c in string.chars().filter(is_bracket) {
+        if is_closing(c) {
+            if is_paired(&stack[..], c) {
                 stack.pop();
             } else {
                 return false;
@@ -11,18 +11,18 @@ pub fn brackets_are_balanced(string: &str) -> bool {
             stack.push(c);
         }
     }
-    stack.len() == 0
+    stack.is_empty()
 }
 
 fn is_bracket(c: &char) -> bool {
     *c == '(' || *c == ')' || *c == '{' || *c == '}' || *c == '[' || *c == ']'
 }
 
-fn is_closing(c: &char) -> bool {
-    *c == ')' || *c == ']' || *c == '}'
+fn is_closing(c: char) -> bool {
+    c == ')' || c == ']' || c == '}'
 }
 
-fn is_paired(stack: &[char], c: &char) -> bool {
+fn is_paired(stack: &[char], c: char) -> bool {
     if stack.is_empty() {
         return false;
     }
@@ -32,4 +32,8 @@ fn is_paired(stack: &[char], c: &char) -> bool {
         '}' => stack[stack.len() - 1] == '{',
         _ => false,
     }
+}
+
+fn some(i: i32) {
+    println!("Some function");
 }

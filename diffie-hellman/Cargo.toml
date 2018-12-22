@@ -1,0 +1,9 @@
+[package]
+name = "diffie-hellman"
+version = "0.1.0"
+
+[dependencies]
+rand="0.6.0"
+num = "0.2"
+num-traits = "0.2"
+num-bigint = "0.2"
