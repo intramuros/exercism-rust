@@ -1,0 +1,78 @@
+// #[macro_use]
+ crate space_age_derive;
+use crate::space_age_derive::PlanetFn;
+
+const EARTH_PERIOD: f64 = 31557600.0;
+const MERCURY_PERIOD: f64 = EARTH_PERIOD * 0.2408467;
+const VENUS_PERIOD: f64 = EARTH_PERIOD * 0.61519726;
+const MARS_PERIOD: f64 = EARTH_PERIOD * 1.8808158;
+const JUPITER_PERIOD: f64 = EARTH_PERIOD * 11.862615;
+const SATURN_PERIOD: f64 = EARTH_PERIOD * 29.447498;
+const URANUS_PERIOD: f64 = EARTH_PERIOD * 84.016846;
+const NEPTUNE_PEROD: f64 = EARTH_PERIOD * 164.79132;
+
+#[derive(Debug)]
+pub struct Duration {
+    val: f64,
+}
+
+impl From<u64> for Duration {
+    fn from(s: u64) -> Self {
+        Duration { val: s as f64 }
+    }
+}
+
+pub trait Planet {
+    fn years_during(d: &Duration) -> f64;
+}
+
+#[derive(PlanetFn)]
+pub struct Mercury;
+pub struct Venus;
+pub struct Earth;
+pub struct Mars;
+pub struct Jupiter;
+pub struct Saturn;
+pub struct Uranus;
+pub struct Neptune;
+
+impl Planet for Mercury {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / MERCURY_PERIOD
+    }
+}
+impl Planet for Venus {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / VENUS_PERIOD
+    }
+}
+impl Planet for Earth {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / EARTH_PERIOD
+    }
+}
+impl Planet for Mars {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / MARS_PERIOD
+    }
+}
+impl Planet for Jupiter {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / JUPITER_PERIOD
+    }
+}
+impl Planet for Saturn {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / SATURN_PERIOD
+    }
+}
+impl Planet for Uranus {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / URANUS_PERIOD
+    }
+}
+impl Planet for Neptune {
+    fn years_during(d: &Duration) -> f64 {
+        d.val / NEPTUNE_PEROD
+    }
+}
