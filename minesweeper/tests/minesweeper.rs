@@ -26,31 +26,31 @@ fn no_rows() {
 }
 
 #[test]
-#[ignore]
+// #[ignore]
 fn no_columns() {
     run_test(&[""]);
 }
 
 #[test]
-#[ignore]
+// #[ignore]
 fn no_mines() {
     run_test(&["   ", "   ", "   "]);
 }
 
 #[test]
-#[ignore]
+// #[ignore]
 fn board_with_only_mines() {
     run_test(&["***", "***", "***"]);
 }
 
 #[test]
-#[ignore]
+// #[ignore]
 fn mine_surrounded_by_spaces() {
     run_test(&["111", "1*1", "111"]);
 }
 
 #[test]
-#[ignore]
+// #[ignore]
 fn space_surrounded_by_mines() {
     run_test(&["***", "*8*", "***"]);
 }
