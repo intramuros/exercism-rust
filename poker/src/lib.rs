@@ -42,52 +42,32 @@ impl From<&str> for Hand {
 
         let rank_sort: Vec<_> = rank_sort.into_iter().map(|(c, _)| *c).collect();
 
+        let suits_len = suits.len();
+
         match rank_sort.len() {
-            5 => {
-                if rank_sort
-                    .iter()
-                    .zip(rank_sort.iter().skip(1))
-                    .all(|(a, b)| a - b == 1)
-                {
-                    match suits.len() {
-                        1 => Hand::new(STRAIGHT_FLUSH, rank_sort),
-                        _ => Hand::new(STRAIGHT, rank_sort),
-                    }
-                // check for ace low
-                } else if rank_sort == vec![14, 5, 4, 3, 2] {
-                    match suits.len() {
-                        1 => Hand::new(STRAIGHT_FLUSH, vec![5, 4, 3, 2, 1]),
-                        _ => Hand::new(STRAIGHT, vec![5, 4, 3, 2, 1]),
-                    }
-                } else {
-                    match suits.len() {
-                        1 => Hand::new(FLUSH, rank_sort),
-                        _ => Hand::new(HIGH_CARD, rank_sort),
-                    }
+            5 if rank_sort
+                .iter()
+                .zip(rank_sort.iter().skip(1))
+                .all(|(a, b)| a - b == 1) =>
+            {
+                match suits_len {
+                    1 => Hand::new(STRAIGHT_FLUSH, rank_sort),
+                    _ => Hand::new(STRAIGHT, rank_sort),
                 }
             }
-            4 => {
-                // one pair
-                Hand::new(ONE_PAIR, rank_sort)
-            }
-            3 => {
-                if ranks.values().any(|&val| val == 3) {
-                    // three of a kind
-                    Hand::new(THREE_OF_A_KIND, rank_sort)
-                } else {
-                    // two pair
-                    Hand::new(TWO_PAIR, rank_sort)
-                }
-            }
-            _ => {
-                if ranks.values().any(|&val| val == 4) {
-                    // four of a kind
-                    Hand::new(FOUR_OF_A_KIND, rank_sort)
-                } else {
-                    // full house
-                    Hand::new(FULL_HOUSE, rank_sort)
-                }
-            }
+            5 if rank_sort == vec![14, 5, 4, 3, 2] => match suits_len {
+                1 => Hand::new(STRAIGHT_FLUSH, vec![5, 4, 3, 2, 1]),
+                _ => Hand::new(STRAIGHT, vec![5, 4, 3, 2, 1]),
+            },
+            5 => match suits_len {
+                1 => Hand::new(FLUSH, rank_sort),
+                _ => Hand::new(HIGH_CARD, rank_sort),
+            },
+            4 => Hand::new(ONE_PAIR, rank_sort),
+            3 if ranks.values().any(|&val| val == 3) => Hand::new(THREE_OF_A_KIND, rank_sort),
+            3 => Hand::new(TWO_PAIR, rank_sort),
+            _ if ranks.values().any(|&val| val == 4) => Hand::new(FOUR_OF_A_KIND, rank_sort),
+            _ => Hand::new(FULL_HOUSE, rank_sort),
         }
     }
 }
